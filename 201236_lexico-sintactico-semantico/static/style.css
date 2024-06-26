@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #333;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+textarea {
+    width: 100%;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+button {
+    display: block;
+    margin-top: 10px;
+}
+
+#result {
+    margin-top: 20px;
+}

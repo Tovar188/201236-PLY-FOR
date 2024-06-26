@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+    <title>Analizador Léxico, Sintáctico y Semántico</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Analizador Léxico, Sintáctico y Semántico</h1>
+    <form action="/analyze" method="post" id="codeForm">
+        <textarea name="code" rows="10" cols="50" placeholder="Escribe tu código aquí..."></textarea><br>
+        <button type="submit">Analizar</button>
+    </form>
+    <div id="result"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#codeForm').on('submit', function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/analyze',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#result').empty();
+                        if (response.status === 'success') {
+                            $('#result').append('<p>Código léxico, sintáctico y semánticamente correcto</p>');
+                        } else {
+                            if (response.lexical_errors) {
+                                $('#result').append('<p>Errores léxicos: ' + response.lexical_errors.join(', ') + '</p>');
+                            }
+                            if (response.syntactic_errors) {
+                                $('#result').append('<p>Errores sintácticos: ' + response.syntactic_errors.join(', ') + '</p>');
+                            }
+                            if (response.semantic_errors) {
+                                $('#result').append('<p>Errores semánticos: ' + response.semantic_errors.join(', ') + '</p>');
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
